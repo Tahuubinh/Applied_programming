@@ -44,6 +44,9 @@ int main(){
     while(t--){
         ull n, k, m;
         cin >> n >> k >> m;
+        if(n < k){
+            cout << 0;
+        }
         ull res = 1;
         if (k > n/2){
             k = n - k;
