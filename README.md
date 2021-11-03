@@ -3,4 +3,5 @@ This repos save my code preparing for my subject - Applied algorithms
 Div lần đầu: https://codeforces.com/contest/1598  
 Div 2 13/10: https://codeforces.com/contest/1593  
 Div 3 18/10: https://codeforces.com/contest/1586  
-Div 2 29/10: https://codeforces.com/contest/1606  
+Div 2 29/10: https://codeforces.com/contest/1606  Green
+Div 3 3/11: https://codeforces.com/contest/1607  
