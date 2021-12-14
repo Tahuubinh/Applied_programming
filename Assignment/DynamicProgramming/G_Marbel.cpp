@@ -17,7 +17,7 @@ int main(){
     }
     for (int i = 1; i <= W; ++i){
         for (int j = 1; j <= H; ++j){
-            ans[i][j] = i * j; // Not packed
+            ans[i][j] = i * j; // At the beginning
             for (int k = 1; k <= n; ++k){
                 if (!(i % w[k]) && !(j % h[k])){
                     ans[i][j] = 0;

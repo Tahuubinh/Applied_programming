@@ -14,6 +14,7 @@ int main(){
     cin >> n;
     for (int i = 1; i <= n; ++i){
         cin >> s[i] >> t[i];
+        // longest that termination not later than time step t
         maxl[t[i]] = max(maxl[t[i]], t[i] - s[i]);
     }
     maxs = *max_element(s, s + n);
