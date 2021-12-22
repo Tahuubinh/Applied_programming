@@ -45,12 +45,16 @@ void dijkstra(int s){
         q.push({i, D[i]});
     }    
 
-    for (int i = 0; i < n; ++i){
+    int cnt = n;
+    while (!q.empty()){
         pii x = q.top();
         q.pop();
         int ubest = x.first;
+        if (ubest == t){
+            break;
+        }
         P[ubest] = 1;
-
+ 
         for (int v: edge[ubest]){
             if (!P[v]){               
                 D[v] = min(D[v], D[ubest] + weight[{ubest, v}]);
