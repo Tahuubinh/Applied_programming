@@ -2,6 +2,7 @@
 using namespace std;
 #define endl '\n';
 #define pii pair<int, int>
+#define fr(i,x,y) for(int i = x; i <= y; ++i)
 using ll = long long;
 using ull = unsigned long long;
 int t;

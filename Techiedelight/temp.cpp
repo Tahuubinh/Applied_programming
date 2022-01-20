@@ -1,87 +1,101 @@
-#include <iostream>
-#include <cstring>
-#include <vector>
-#include <stack>
+#include<bits/stdc++.h>
 using namespace std;
+using Edge = pair<int, int>;
+const int MAX = 30;
 
-int n, m, num[10005], low[10005], temp1, temp2,
-cnt=0, connect[10005], numSCC=0;
-vector<int> a[10005];
-stack<int> S;
+int n, m;
+vector<Edge> vt;
+int x[MAX];
+int cnt = 0;
+bool visited[MAX];
 
-// void dfs(int u) {
-//     low[u] = num[u] = ++cnt;
-//     S.push(u);
-//     connect[u] = 1;
-//     for(int v : a[u]) {
-//         if (!num[v]) dfs(v);
-//         if (connect[v]) low[u] = min(low[u], low[v]);
-//     }
+void input(){
+    cin >> n >> m;
 
-//     if (num[u] == low[u]) {
-//         numSCC++;
-//         while(1) {
-//             int v = S.top(); S.pop();
-//             connect[v] = 0;
-//             if (u == v) break;
-//         }
-//     }
-// }
+    for(int i=0; i<m; i++){
+        int tmp1, tmp2;
+        cin >> tmp1 >> tmp2;
 
-void dfs(int u){
-    low[u] = num[u] = ++cnt;
-    S.push(u);
-    connect[u] = 1;
-    for (int v: a[u]){
-        if (!num[v]){
-            dfs(v);
-        } 
-        if (connect[v]){
-            low[u] = min(low[u], low[v]);
-        }
+        vt.push_back({tmp1, tmp2});
     }
 
-    if (num[u] == low[u]){
-        ++numSCC;
-        while(true){
-            int v = S.top();
-            S.pop();
-            connect[v] = 0;
-            if (u == v){
-                break;
-            }
+    for(int i=1; i<=n; i++) visited[i] = false;
+}
+
+/*datastructure disjoint-set*/
+long long r[MAX]; // rank
+long long p[MAX]; // parent of node
+
+void makeSet(long long x){
+    p[x] = x;
+    r[x] = 0;
+}
+
+void unionSet(long long x, long long y){
+
+    if(r[x] > r[y]){
+        p[y] = x;
+    } else {
+        p[x] = y;
+        if(r[x] == r[y]) r[y] += 1;
+    }
+}
+
+long long findSet(long long x){
+    while(p[x] != x){
+        x = p[x];
+    }
+    return p[x];
+}
+/*end datastructure*/
+
+void solution(){
+    cnt++;
+}
+
+bool check(int a, int i){
+    if(a > 1){
+        if(x[a-1] > i) return false;
+        if(i > (m-n+1) + a-1) return false;
+    } else if(i > (m-n+1) + 1) return false;
+
+    if(visited[i]) return false;
+
+    for(int j=1; j<=n; j++) makeSet(j);
+
+    for(int j=1; j<a; j++){
+        int pfirst = findSet(vt[x[j]].first);
+        int psecond = findSet(vt[x[j]].second);
+        unionSet(pfirst, psecond);
+    }
+
+    int pfirst = findSet(vt[i].first);
+    int psecond = findSet(vt[i].second);
+
+    if(pfirst == psecond)  return false;
+    return true;
+}
+
+void TRY(int a){
+    for(int i=0; i<m; i++){
+        if(check(a, i)){
+            visited[i] = true;
+            x[a] = i;
+
+            if(a == n-1) solution();
+            else TRY(a+1);
+
+            visited[i] = false;
         }
     }
 }
 
-int main() {
+int main(){
+    ios_base::sync_with_stdio(false); cin.tie(NULL);
+    input();
+    TRY(1);
 
-    // cin >> n >> m;
-    // for(int i = 0; i < m; i++) {
-    //     int u, v; cin >> u >> v;
-    //     a[u].push_back(v);
-    // }
-
-    // // memset(num, 0, sizeof num);
-    // // memset(low, 0, sizeof low);
-    // // memset(connect, 0, sizeof connect);
-    // for(int u = 1; u <= n; u++)
-    //     if (!num[u]) dfs(u);
-
-    // cout << numSCC;
-
-    cin >> n >> m;
-    //a.resize(n + 1);
-    for (int i = 1; i <= m; ++i){
-        cin >> temp1 >> temp2;
-        a[temp1].push_back(temp2);
-    }
-    for (int i = 1; i <= n; ++i){
-        if (!num[i]){
-            dfs(i);
-        }
-    }
-    cout << numSCC;
+    cout << cnt;
 
     return 0;
 }

@@ -5,12 +5,13 @@ using namespace std;
 using ll = long long;
 using ull = unsigned long long;
 
-int n, m, u, v, w;
+int n, m, u, v;
+ll w;
 
 struct Edge {
     int u, v;
-    int w;
-    Edge(int _u = 0, int _v = 0, int _w = 0){
+    ll w;
+    Edge(int _u = 0, int _v = 0, ll _w = 0){
         u = _u;
         v = _v;
         w = _w;
@@ -20,7 +21,10 @@ struct Edge {
 struct UF{
     vector<int> parents;
     UF(int n){
-        parents.resize(n + 1, 1);
+        parents.resize(n + 1);
+        for (int i = 1; i <= n; ++i){
+            parents[i] = i;
+        }
     }
 
     int find(int x){
@@ -52,14 +56,16 @@ vector<Edge> mst (int n, vector<Edge> edges){
     for (Edge e: edges){
         int u = e.u;
         int v = e.v;
+        //cout << e.u << ' ' << e.v << ' ' << e.w << endl;
+        // cout << uf.find(u) << ' ' << uf.find(v) << endl;
         if (uf.find(u) != uf.find(v)){
             uf.unite(u, v);
             res.push_back(e);
         }
     }
-    for (Edge e: res){
-        cout << e.u << ' ' << e.v << ' ' << e.w << endl;
-    }
+    // for (Edge e: res){
+    //     cout << e.u << ' ' << e.v << ' ' << e.w << endl;
+    // }
     return res;
 }
 
@@ -76,9 +82,9 @@ int main(){
 
 
     vector<Edge> ans = mst(n, edges);
-    int res = 0;
+    ll res = 0;
     for (Edge e: ans){
-        cout << e.u << ' ' << e.v << ' ' << e.w << endl;
+        // cout << e.u << ' ' << e.v << ' ' << e.w << endl;
         res += e.w;
     }
     cout << res;
